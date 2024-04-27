@@ -2,6 +2,7 @@ from django.db import models
 from core.models.base import BaseModel
 from core.models.vehiculo import Vehiculo
 from core.models.oficial import Oficial
+from core.validators import validate_fecha_infraccion
 
 
 class Infraccion(BaseModel):
@@ -20,7 +21,8 @@ class Infraccion(BaseModel):
         "Fecha de la infracción",
         blank=False,
         null=False,
-        help_text="Fecha de la infracción"
+        help_text="Fecha de la infracción",
+        validators=[validate_fecha_infraccion]
     )
 
     oficial = models.ForeignKey(
