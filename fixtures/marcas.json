@@ -1,0 +1,72 @@
+[
+  {
+    "model": "core.Marca",
+    "pk": 1,
+    "fields": {
+      "nombre": "KIA"
+    }
+  },
+  {
+    "model": "core.Marca",
+    "pk": 2,
+    "fields": {
+      "nombre": "CHEVROLET"
+    }
+  },
+  {
+    "model": "core.Marca",
+    "pk": 3,
+    "fields": {
+      "nombre": "NISSAN"
+    }
+  },
+  {
+    "model": "core.Marca",
+    "pk": 4,
+    "fields": {
+      "nombre": "MAZDA"
+    }
+  },
+  {
+    "model": "core.Marca",
+    "pk": 5,
+    "fields": {
+      "nombre": "TOYOTA"
+    }
+  },
+  {
+    "model": "core.Marca",
+    "pk": 6,
+    "fields": {
+      "nombre": "FORD"
+    }
+  },
+  {
+    "model": "core.Marca",
+    "pk": 7,
+    "fields": {
+      "nombre": "RENAULT"
+    }
+  },
+  {
+    "model": "core.Marca",
+    "pk": 8,
+    "fields": {
+      "nombre": "VOLKSWAGEN"
+    }
+  },
+  {
+    "model": "core.Marca",
+    "pk": 9,
+    "fields": {
+      "nombre": "BMW"
+    }
+  },
+  {
+    "model": "core.Marca",
+    "pk": 10,
+    "fields": {
+      "nombre": "MERCEDES-BENZ"
+    }
+  }
+]

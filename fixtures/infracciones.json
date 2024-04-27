@@ -1,0 +1,32 @@
+[
+  {
+    "model": "core.Infraccion",
+    "pk": 1,
+    "fields": {
+      "vehiculo": 1,
+      "fecha_infraccion": "2024-04-01T16:15:30-0500",
+      "oficial": 1,
+      "observaciones": "El señor Lio Messi, campeón del mundo, fué sorprendido conduciendo de forma imprudente y/o agresiva. Que 'conducía así porque dejó la ropa secando afuera y comenzó a llover' decía."
+    }
+  },
+  {
+    "model": "core.Infraccion",
+    "pk": 2,
+    "fields": {
+      "vehiculo": 2,
+      "fecha_infraccion": "2024-04-07T03:45:15-0500",
+      "oficial": 2,
+      "observaciones": "El señor Mbappe, ha sido sorprendido conduciendo bajo los efectos del alcohol. Que 'eso no fué falta señor juez' decía."
+    }
+  },
+  {
+    "model": "core.Infraccion",
+    "pk": 3,
+    "fields": {
+      "vehiculo": 3,
+      "fecha_infraccion": "2024-04-16T07:28:12-0500",
+      "oficial": 3,
+      "observaciones": "El señor Cristiano, amigo de Lio, ha sido sorprendido conduciendo sin usar el cinturón de seguridad. Que 'en Arabia no le pasaba esto' decía."
+    }
+  }
+]

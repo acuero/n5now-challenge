@@ -1,0 +1,26 @@
+[
+  {
+    "model": "core.Oficial",
+    "pk": 1,
+    "fields": {
+      "nombre": "PEDRO PEREZ PEREA",
+      "nui": "0007652"
+    }
+  },
+  {
+    "model": "core.Oficial",
+    "pk": 2,
+    "fields": {
+      "nombre": "MANUEL ITO RODRIGUEZ",
+      "nui": "12345678"
+    }
+  },
+  {
+    "model": "core.Oficial",
+    "pk": 3,
+    "fields": {
+      "nombre": "PRAGMACIO TORRES AYALA",
+      "nui": "D13133"
+    }
+  }
+]

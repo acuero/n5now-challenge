@@ -1,0 +1,29 @@
+[
+  {
+    "model": "core.Persona",
+    "pk": 1,
+    "fields": {
+      "nombre": "Lionel Messi",
+      "email": "lio.messi@gmail.com",
+      "observaciones": "Futbolista argentino."
+    }
+  },
+  {
+    "model": "core.Persona",
+    "pk": 2,
+    "fields": {
+      "nombre": "Kylian Mbappe",
+      "email": "kiki.mbappe@gmail.com",
+      "observaciones": "Futbolista francés."
+    }
+  },
+  {
+    "model": "core.Persona",
+    "pk": 3,
+    "fields": {
+      "nombre": "Cristiano Ronaldo",
+      "email": "elbicho.cr7@gmail.com",
+      "observaciones": "Futbolista portugués."
+    }
+  }
+]

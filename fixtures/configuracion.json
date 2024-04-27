@@ -1,0 +1,10 @@
+[
+  {
+    "model": "core.Configuracion",
+    "pk": 1,
+    "fields": {
+      "nombre": "CONFIGURACION_GENERAL",
+      "dias_antiguedad_infraccion": 90
+    }
+  }
+]

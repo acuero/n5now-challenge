@@ -1,0 +1,32 @@
+[
+  {
+    "model": "core.Vehiculo",
+    "pk": 1,
+    "fields": {
+      "placa_patente": "A12345",
+      "marca": 1,
+      "color": "#FF0000",
+      "propietario": 1
+    }
+  },
+  {
+    "model": "core.Vehiculo",
+    "pk": 2,
+    "fields": {
+      "placa_patente": "ABC 987",
+      "marca": 2,
+      "color": "#154360",
+      "propietario": 2
+    }
+  },
+  {
+    "model": "core.Vehiculo",
+    "pk": 3,
+    "fields": {
+      "placa_patente": "XYZ 312",
+      "marca": 3,
+      "color": "#FFC300",
+      "propietario": 3
+    }
+  }
+]

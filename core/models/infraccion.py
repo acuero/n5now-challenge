@@ -34,3 +34,7 @@ class Infraccion(BaseModel):
     class Meta:
         verbose_name = "Infracción"
         verbose_name_plural = "Infracciones"
+
+    def __str__(self):
+        """Representacion de la instancia como cadena de caracteres."""
+        return f"Infracción #{self.pk}"
