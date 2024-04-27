@@ -28,4 +28,8 @@ class Command(BaseCommand):
         for fixture in fixtures:
             self.stdout.write(f"Cargando fixture '{fixture}'")
             call_command("loaddata", fixture)
+        
+        # Aplicamos carga de usuario administrador para demostración
+        call_command("crear_usuario_admin_demo")
+        
         self.stdout.write(self.style.SUCCESS('Datos de demostración cargados correctamente.'))

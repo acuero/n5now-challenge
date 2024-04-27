@@ -21,5 +21,9 @@ class Command(BaseCommand):
                 email=settings.N5NOW_CHALLENGE_USER_EMAIL_DEMO
             )
             self.stdout.write(self.style.SUCCESS('Se ha creado un usuario administrador de demostración.'))
+            self.stdout.write(f"** Credenciales **")
+            self.stdout.write(f"Nombre de usuario: {settings.N5NOW_CHALLENGE_USERNAME_DEMO}")
+            self.stdout.write(f"Contraseña: {settings.N5NOW_CHALLENGE_USER_PASSWORD_DEMO}")
+            self.stdout.write(f"E-mail: {settings.N5NOW_CHALLENGE_USER_EMAIL_DEMO}")
         else:
-            self.stdout.write(self.style.SUCCESS('Ya existe un usuario administrador de demostración.'))
+            self.stdout.write(self.style.NOTICE('Ya existe un usuario administrador de demostración.'))

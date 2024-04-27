@@ -3,24 +3,36 @@
     "model": "core.Oficial",
     "pk": 1,
     "fields": {
+      "username": "0007652",
+      "password": "0007652",
       "nombre": "PEDRO PEREZ PEREA",
-      "nui": "0007652"
+      "nui": "0007652",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   },
   {
     "model": "core.Oficial",
     "pk": 2,
     "fields": {
+      "username": "12345678",
+      "password": "12345678",
       "nombre": "MANUEL ITO RODRIGUEZ",
-      "nui": "12345678"
+      "nui": "12345678",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   },
   {
     "model": "core.Oficial",
     "pk": 3,
     "fields": {
+      "username": "D13133",
+      "password": "D13133",
       "nombre": "PRAGMACIO TORRES AYALA",
-      "nui": "D13133"
+      "nui": "D13133",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   }
 ]

@@ -3,70 +3,90 @@
     "model": "core.Marca",
     "pk": 1,
     "fields": {
-      "nombre": "KIA"
+      "nombre": "KIA",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   },
   {
     "model": "core.Marca",
     "pk": 2,
     "fields": {
-      "nombre": "CHEVROLET"
+      "nombre": "CHEVROLET",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   },
   {
     "model": "core.Marca",
     "pk": 3,
     "fields": {
-      "nombre": "NISSAN"
+      "nombre": "NISSAN",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   },
   {
     "model": "core.Marca",
     "pk": 4,
     "fields": {
-      "nombre": "MAZDA"
+      "nombre": "MAZDA",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   },
   {
     "model": "core.Marca",
     "pk": 5,
     "fields": {
-      "nombre": "TOYOTA"
+      "nombre": "TOYOTA",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   },
   {
     "model": "core.Marca",
     "pk": 6,
     "fields": {
-      "nombre": "FORD"
+      "nombre": "FORD",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   },
   {
     "model": "core.Marca",
     "pk": 7,
     "fields": {
-      "nombre": "RENAULT"
+      "nombre": "RENAULT",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   },
   {
     "model": "core.Marca",
     "pk": 8,
     "fields": {
-      "nombre": "VOLKSWAGEN"
+      "nombre": "VOLKSWAGEN",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   },
   {
     "model": "core.Marca",
     "pk": 9,
     "fields": {
-      "nombre": "BMW"
+      "nombre": "BMW",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   },
   {
     "model": "core.Marca",
     "pk": 10,
     "fields": {
-      "nombre": "MERCEDES-BENZ"
+      "nombre": "MERCEDES-BENZ",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   }
 ]

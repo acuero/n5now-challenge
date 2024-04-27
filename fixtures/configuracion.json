@@ -4,7 +4,9 @@
     "pk": 1,
     "fields": {
       "nombre": "CONFIGURACION_GENERAL",
-      "dias_antiguedad_infraccion": 90
+      "dias_antiguedad_infraccion": 90,
+      "fecha_creacion": "2024-04-01T05:20:00-0500",
+      "ultima_modificacion": "2024-04-02T16:15:30-0500"
     }
   }
 ]

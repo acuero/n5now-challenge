@@ -6,7 +6,9 @@
       "placa_patente": "A12345",
       "marca": 1,
       "color": "#FF0000",
-      "propietario": 1
+      "propietario": 1,
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   },
   {
@@ -16,7 +18,9 @@
       "placa_patente": "ABC 987",
       "marca": 2,
       "color": "#154360",
-      "propietario": 2
+      "propietario": 2,
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   },
   {
@@ -26,7 +30,9 @@
       "placa_patente": "XYZ 312",
       "marca": 3,
       "color": "#FFC300",
-      "propietario": 3
+      "propietario": 3,
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   }
 ]

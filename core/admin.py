@@ -6,6 +6,7 @@ from core.models.vehiculo import Vehiculo
 from core.models.oficial import Oficial
 from core.models.infraccion import Infraccion
 from core.forms import OficialCreationForm
+from django.utils.html import format_html
 
 
 class ConfiguracionAdmin(admin.ModelAdmin):
@@ -63,7 +64,7 @@ class MarcaAdmin(admin.ModelAdmin):
 
 
 class VehiculoAdmin(admin.ModelAdmin):
-    list_display = ['placa_patente', 'marca', 'color', 'propietario', 'fecha_creacion', 'ultima_modificacion']
+    list_display = ['placa_patente', 'marca', 'color_html', 'propietario', 'fecha_creacion', 'ultima_modificacion']
     fieldsets = (
         ('Información básica', {
             'fields': (
@@ -79,6 +80,11 @@ class VehiculoAdmin(admin.ModelAdmin):
             )
         })
     )
+    
+    def color_html(self, obj):
+        html = f'<div style="width: 25px; height: 25px; background-color: {obj.color};"></div>'
+        return format_html(html)
+    color_html.short_description = "Color"
 
 
 class OficialAdmin(admin.ModelAdmin):

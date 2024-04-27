@@ -5,7 +5,9 @@
     "fields": {
       "nombre": "Lionel Messi",
       "email": "lio.messi@gmail.com",
-      "observaciones": "Futbolista argentino."
+      "observaciones": "Futbolista argentino.",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   },
   {
@@ -14,7 +16,9 @@
     "fields": {
       "nombre": "Kylian Mbappe",
       "email": "kiki.mbappe@gmail.com",
-      "observaciones": "Futbolista francés."
+      "observaciones": "Futbolista francés.",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   },
   {
@@ -23,7 +27,9 @@
     "fields": {
       "nombre": "Cristiano Ronaldo",
       "email": "elbicho.cr7@gmail.com",
-      "observaciones": "Futbolista portugués."
+      "observaciones": "Futbolista portugués.",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
   }
 ]

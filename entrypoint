@@ -1,4 +1,0 @@
-#!/bin/sh
-# python manage.py collectstatic --no-input
-python /app/manage.py migrate --no-input
-exec "$@"
