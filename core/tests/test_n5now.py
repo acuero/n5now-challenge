@@ -5,10 +5,12 @@ from datetime import datetime
 from core.validators import validate_fecha_infraccion
 from core.models.configuracion import Configuracion
 from core.models.oficial import Oficial
+from core.models.vehiculo import Vehiculo
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
-
+from django.core.management import call_command
+from django.conf import settings
 
 
 class TestN5Now(TestCase):
@@ -19,7 +21,12 @@ class TestN5Now(TestCase):
     """
     def setUp(self):
         self.client = APIClient()
-    
+
+    @classmethod
+    def setUpTestData(cls):
+        call_command("cargar_data_demo")
+
+
     @patch('core.validators.datetime')
     def test_fecha_infraccion_invalida_antigua(self, fecha_actual):
         """
@@ -79,22 +86,21 @@ class TestN5Now(TestCase):
         """
         Test unitario para probar la generación de tokens para los oficiales.
         """
-        oficial = Oficial.objects.create(nombre="WADE WILSON", nui="998877")
-        data = {"nui": oficial.nui, "password": oficial.nui}
+        data = {"nui": "0007652", "password": "0007652"}
         response = self.client.post(reverse("obtener_token"), data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("token", response.json())
-    
-    def test_obtener_token_oficial_y_cargar_infraccion(self):
+
+
+    def test_cargar_infraccion(self):
         """
         Test de integración para probar la carga de una infracción.
         """
-        oficial = Oficial.objects.create(nombre="PETER PARKER", nui="112233")
-        data_token = {"nui": oficial.nui, "password": oficial.nui}
+        data_token = {"nui": "0007652", "password": "0007652"}
         response_token = self.client.post(reverse("obtener_token"), data_token, format='json')
         json_token = response_token.json()
         self.assertEqual(response_token.status_code, status.HTTP_200_OK)
-        self.assertIn("token", json_token)        
+        self.assertIn("token", json_token)
 
         data_infraccion = {
             "placa_patente": "A12345",
@@ -107,3 +113,112 @@ class TestN5Now(TestCase):
             HTTP_AUTHORIZATION=f"Bearer {json_token['token']}")
         json = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("infraccion", json)
+        self.assertIn("id", json['infraccion'])
+
+
+    def test_cargar_infraccion_con_placa_invalida(self):
+        """
+        Test de integración para probar la carga de una infracción.
+        Espera un HTTP_400_BAD_REQUEST si se provee una placa inválida (no existente).
+        """
+        data_token = {"nui": "0007652", "password": "0007652"}
+        response_token = self.client.post(reverse("obtener_token"), data_token, format='json')
+        json_token = response_token.json()
+        self.assertEqual(response_token.status_code, status.HTTP_200_OK)
+        self.assertIn("token", json_token)
+
+        data_infraccion = {
+            "placa_patente": "00000",
+            "timestamp": "2024-04-01T10:15:00-0500",
+            "comentarios": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        }
+        
+        response = self.client.post(
+            reverse("cargar_infraccion"), 
+            data_infraccion, format='json', 
+            HTTP_AUTHORIZATION=f"Bearer {json_token['token']}")
+        json = response.json()
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("placa_patente", json)
+        self.assertEqual(json['placa_patente'], ["La placa patente provista no existe."])
+
+
+    @patch('core.validators.datetime')
+    def test_cargar_infraccion_con_fecha_antigua(self, fecha_actual):
+        """
+        Test de integración para probar la carga de una infracción.
+        Espera un HTTP_400_BAD_REQUEST si se provee una fecha inválida de acuerdo a la configuracion de antigüedad.
+        
+        Simulamos que:
+            - Antigüedad de infracciones permitida en dias: 10 días.
+            - La fecha actual es: 2024-04-20
+            - Fecha de la infraccion: 2024-04-09
+        """
+        Configuracion.objects.filter(pk=1).update(dias_antiguedad_infraccion=10)
+        fecha_actual.now.return_value.date.return_value = datetime(2024, 4, 20).date()
+        
+        
+        data_token = {"nui": "0007652", "password": "0007652"}
+        response_token = self.client.post(reverse("obtener_token"), data_token, format='json')
+        json_token = response_token.json()
+        self.assertEqual(response_token.status_code, status.HTTP_200_OK)
+        self.assertIn("token", json_token)
+
+        data_infraccion = {
+            "placa_patente": "A12345",
+            "timestamp": "2024-01-09T10:15:00-0500",
+            "comentarios": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        }
+        
+        response = self.client.post(
+            reverse("cargar_infraccion"), 
+            data_infraccion, format='json', 
+            HTTP_AUTHORIZATION=f"Bearer {json_token['token']}")
+        json = response.json()
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("timestamp", json)
+        
+        configuracion = Configuracion.objects.get(nombre=settings.N5NOW_CHALLENGE_MAINCONFIG_KEY)
+        self.assertEqual(
+            json['timestamp'], 
+            [f"La fecha de infracción no puede ser futura ni superar {configuracion.dias_antiguedad_infraccion} días de antigüedad."])
+
+
+    @patch('core.validators.datetime')
+    def test_cargar_infraccion_con_fecha_futura(self, fecha_actual):
+        """
+        Test de integración para probar la carga de una infracción.
+        Espera un HTTP_400_BAD_REQUEST si se provee una fecha futura.
+        
+        Simulamos que:
+            - Antigüedad de infracciones permitida en dias: 10 días.
+            - La fecha actual es: 2024-04-20
+            - Fecha de la infraccion: 2024-04-21
+        """
+        fecha_actual.now.return_value.date.return_value = datetime(2024, 4, 20).date()
+        
+        data_token = {"nui": "0007652", "password": "0007652"}
+        response_token = self.client.post(reverse("obtener_token"), data_token, format='json')
+        json_token = response_token.json()
+        self.assertEqual(response_token.status_code, status.HTTP_200_OK)
+        self.assertIn("token", json_token)
+
+        data_infraccion = {
+            "placa_patente": "A12345",
+            "timestamp": "2023-04-21T10:15:00-0500",
+            "comentarios": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        }
+        
+        response = self.client.post(
+            reverse("cargar_infraccion"), 
+            data_infraccion, format='json', 
+            HTTP_AUTHORIZATION=f"Bearer {json_token['token']}")
+        json = response.json()
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("timestamp", json)
+        
+        configuracion = Configuracion.objects.get(nombre=settings.N5NOW_CHALLENGE_MAINCONFIG_KEY)
+        self.assertEqual(
+            json['timestamp'], 
+            [f"La fecha de infracción no puede ser futura ni superar {configuracion.dias_antiguedad_infraccion} días de antigüedad."])

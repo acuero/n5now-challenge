@@ -4,9 +4,11 @@ Vistas (endpoints) del api.
 from rest_framework import views, permissions, status
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-from core.serializers import OficialObtainTokenSerializer, CargarInfraccionSerializer
+from core.serializers import OficialObtainTokenSerializer, CargarInfraccionSerializer, InfraccionSerializer
 from core.management.authentication import JWTOficialAuth
 from core.models.oficial import Oficial
+from core.models.infraccion import Infraccion
+from core.models.vehiculo import Vehiculo
 from django.contrib.auth import authenticate
 from core.permissions import OficialIsAuthenticated
 
@@ -44,5 +46,21 @@ class CargarInfraccionView(views.APIView):
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        print("serializer.validated_data:", serializer.validated_data)
-        return Response({"mensaje": "¡Hola! Has accedido a esta vista protegida."}, status=status.HTTP_200_OK)
+        
+        placa_patente = serializer.validated_data.get('placa_patente')
+        timestamp = serializer.validated_data.get('timestamp')
+        comentarios = serializer.validated_data.get('comentarios')
+        
+        vehiculo = Vehiculo.objects.get(placa_patente=placa_patente)        
+        infraccion = Infraccion.objects.create(
+            vehiculo=vehiculo, 
+            fecha_infraccion=timestamp, 
+            oficial=request.user, 
+            observaciones=comentarios)
+        
+        return Response(
+            {
+                "mensaje": "la infracción se cargó correctamente.", 
+                "infraccion": InfraccionSerializer(infraccion).data
+            }, 
+            status=status.HTTP_200_OK)
