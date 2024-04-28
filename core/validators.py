@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from django.conf import settings
 from core.models.configuracion import Configuracion
 from core.models.vehiculo import Vehiculo
+from core.models.persona import Persona
 
 
 
@@ -37,3 +38,13 @@ def validate_placa_patente(value):
         Vehiculo.objects.get(placa_patente=value)
     except Vehiculo.DoesNotExist:
         raise ValidationError("La placa patente provista no existe.")
+
+
+def validate_email_propietario(value):
+    """
+    Validador que verifica la existencia de un propietario con el email provisto.
+    """
+    try:
+        Persona.objects.get(email=value)
+    except Persona.DoesNotExist:
+        raise ValidationError("El correo electrónico provisto no existe.")

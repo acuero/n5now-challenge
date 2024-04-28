@@ -92,6 +92,26 @@ class TestN5Now(TestCase):
         self.assertIn("token", response.json())
 
 
+    def test_obtener_token_oficial_inexistente(self):
+        """
+        Test unitario para probar la generación de tokens para los oficiales.
+        Espera un HTTP_404_NOT_FOUND si se provee un oficial inexistente.
+        """
+        data = {"nui": "0007652XX", "password": "0007652XX"}
+        response = self.client.post(reverse("obtener_token"), data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+    
+    
+    def test_obtener_token_oficial_con_clave_incorrecta(self):
+        """
+        Test unitario para probar la generación de tokens para los oficiales.
+        Espera un HTTP_400_BAD_REQUEST si se provee una contraseña errada.
+        """
+        data = {"nui": "0007652", "password": "0007652XX"}
+        response = self.client.post(reverse("obtener_token"), data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
     def test_cargar_infraccion(self):
         """
         Test de integración para probar la carga de una infracción.
@@ -222,3 +242,27 @@ class TestN5Now(TestCase):
         self.assertEqual(
             json['timestamp'], 
             [f"La fecha de infracción no puede ser futura ni superar {configuracion.dias_antiguedad_infraccion} días de antigüedad."])
+    
+    
+    def test_generar_informe(self):
+        """
+        Test que prueba la generación del informe de un propietario.
+        """
+        data = {"email": "elbicho.cr7@gmail.com"}
+        response = self.client.post(reverse("generar_informe"), data, format='json')
+        json = response.json()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn("infracciones", json)
+
+
+    def test_generar_informe_con_email_invalido(self):
+        """
+        Test que prueba la generación del informe de un propietario.
+        Espera un HTTP_400_BAD_REQUEST si 
+        """
+        data = {"email": "elbichote.cr7@gmail.com"}
+        response = self.client.post(reverse("generar_informe"), data, format='json')
+        json = response.json()
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("email", json)
+        self.assertEqual(json['email'], ["El correo electrónico provisto no existe."])

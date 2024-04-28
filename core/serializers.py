@@ -2,7 +2,7 @@
 Serializadores para presentacion de datos.
 """
 from rest_framework import serializers
-from core.validators import validate_fecha_infraccion, validate_placa_patente
+from core.validators import validate_fecha_infraccion, validate_placa_patente, validate_email_propietario
 from core.models.infraccion import Infraccion
 
 
@@ -34,8 +34,24 @@ class CargarInfraccionSerializer(serializers.Serializer):
 
 
 class InfraccionSerializer(serializers.ModelSerializer):
+    """
+    Serializador con la definicion de la data de una infraccion.
+    """
     class Meta:
+        """
+        Metadata de la clase.
+        """
         model = Infraccion
         depth = 1
-        fields = ['id', 'vehiculo', 'fecha_infraccion', 'oficial', 'fecha_creacion', 'ultima_modificacion']
+        fields = [
+            'id', 'vehiculo', 'fecha_infraccion', 'oficial', 
+            'observaciones', 'fecha_creacion', 'ultima_modificacion']
         read_only_fields = ['vehiculo', 'fecha_infraccion', 'oficial']
+
+
+
+class GenerarInformeSerializer(serializers.Serializer):
+    """
+    Serializador con la definición de la data que recibirá la generación del informe.
+    """
+    email = serializers.EmailField(validators=[validate_email_propietario])

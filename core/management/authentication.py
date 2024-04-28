@@ -15,7 +15,7 @@ class JWTOficialAuth(authentication.BaseAuthentication):
     def authenticate(self, request):
         """
         Implementacion de la autenticación
-        """
+        """        
         jwt_token = request.META.get('HTTP_AUTHORIZATION')
         if jwt_token is None:
             return None

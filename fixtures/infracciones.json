@@ -34,5 +34,29 @@
       "fecha_creacion": "2024-04-24T10:15:00-0500",
       "ultima_modificacion": "2024-04-24T10:15:00-0500"
     }
+  },
+  {
+    "model": "core.Infraccion",
+    "pk": 4,
+    "fields": {
+      "vehiculo": 3,
+      "fecha_infraccion": "2024-04-20T16:05:30-0500",
+      "oficial": 3,
+      "observaciones": "El señor Cristiano, una vez más, ha sido sorprendido, esta vez bajo los efectos del alcohol.",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
+    }
+  },
+  {
+    "model": "core.Infraccion",
+    "pk": 5,
+    "fields": {
+      "vehiculo": 3,
+      "fecha_infraccion": "2024-04-24T11:30:40-0500",
+      "oficial": 3,
+      "observaciones": "El señor Cristiano, nuevamente, bajo los efectos del alcohol.",
+      "fecha_creacion": "2024-04-24T10:15:00-0500",
+      "ultima_modificacion": "2024-04-24T10:15:00-0500"
+    }
   }
 ]
