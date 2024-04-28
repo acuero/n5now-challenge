@@ -4,12 +4,8 @@ set -o errexit
 # set -o pipefail
 set -o nounset
 
-# Aplicaci√n de migraciones
+# Aplicaci√≥n de migraciones
 python /app/manage.py migrate --no-input
-
-# Carga de datos para demostraci√n
-#python /app/manage.py cargar_data_demo
-#python /app/manage.py crear_usuario_admin_demo
 
 # Levantamos server de Django
 python /app/manage.py runserver 0.0.0.0:8000

@@ -1,7 +1,5 @@
 from django.db import models
 from core.models.base import BaseModel
-from core.models.marca import Marca
-from core.models.persona import Persona
 from colorfield.fields import ColorField
 
 
@@ -19,7 +17,7 @@ class Vehiculo(BaseModel):
     )
 
     marca = models.ForeignKey(
-        Marca,
+        "core.Marca",
         blank=False,
         null=False,
         on_delete=models.CASCADE,
@@ -34,7 +32,7 @@ class Vehiculo(BaseModel):
     )
 
     propietario = models.ForeignKey(
-        Persona,
+        "core.Persona",
         blank=False,
         null=False,
         on_delete=models.CASCADE,

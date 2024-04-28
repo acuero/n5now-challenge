@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.conf import settings
 
 
@@ -14,6 +14,7 @@ class Command(BaseCommand):
         """
         Implementación del comando.
         """
+        User = get_user_model()
         if not User.objects.filter(email=settings.N5NOW_CHALLENGE_USER_EMAIL_DEMO).exists():
             User.objects.create_superuser(
                 username=settings.N5NOW_CHALLENGE_USERNAME_DEMO,

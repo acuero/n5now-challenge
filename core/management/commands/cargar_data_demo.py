@@ -2,7 +2,6 @@ from django.core.management.base import BaseCommand
 from django.core.management import call_command
 from django.conf import settings
 
-
 class Command(BaseCommand):
     """
     Comando que carga datos de demostración de los distintos modelos del proyecto.
@@ -16,7 +15,6 @@ class Command(BaseCommand):
         """
         # El orden en que se deben aplicar los fixtures es importante
         fixtures = [
-            settings.N5NOW_CHALLENGE_FIXTURES_PATH + "configuracion.json",
             settings.N5NOW_CHALLENGE_FIXTURES_PATH + "personas.json",
             settings.N5NOW_CHALLENGE_FIXTURES_PATH + "marcas.json",
             settings.N5NOW_CHALLENGE_FIXTURES_PATH + "vehiculos.json",
@@ -28,8 +26,7 @@ class Command(BaseCommand):
         for fixture in fixtures:
             self.stdout.write(f"Cargando fixture '{fixture}'")
             call_command("loaddata", fixture)
+        self.stdout.write(self.style.SUCCESS('Datos de demostración cargados correctamente.'))
         
         # Aplicamos carga de usuario administrador para demostración
         call_command("crear_usuario_admin_demo")
-        
-        self.stdout.write(self.style.SUCCESS('Datos de demostración cargados correctamente.'))

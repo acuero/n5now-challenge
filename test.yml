@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  django_test:
+    image: n5now_challenge-django
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    working_dir: /app
+    command: ["pytest"]
+    environment:
+      - DJANGO_SETTINGS_MODULE=n5now_challenge.settings.test

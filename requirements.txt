@@ -6,3 +6,8 @@ tzdata==2024.1
 django-environ==0.11.2
 psycopg2==2.9.9
 django-colorfield==0.11.0
+pytest
+pytest-django
+pytest-sugar
+djangorestframework
+djangorestframework-simplejwt

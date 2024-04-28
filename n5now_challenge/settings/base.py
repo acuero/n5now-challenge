@@ -16,7 +16,7 @@ import os
 env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 env.read_env(os.path.join(BASE_DIR, '.env'))
 
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'colorfield',
+    'rest_framework',
     'core',
 ]
 
@@ -132,3 +133,15 @@ N5NOW_CHALLENGE_FIXTURES_PATH = env.str("N5NOW_CHALLENGE_FIXTURES_PATH")
 N5NOW_CHALLENGE_USERNAME_DEMO = env.str("N5NOW_CHALLENGE_USERNAME_DEMO")
 N5NOW_CHALLENGE_USER_PASSWORD_DEMO = env.str("N5NOW_CHALLENGE_USER_PASSWORD_DEMO")
 N5NOW_CHALLENGE_USER_EMAIL_DEMO = env.str("N5NOW_CHALLENGE_USER_EMAIL_DEMO")
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": {
+        "core.management.authentication.JWTOficialAuth",
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    }
+}
+
+JWT_CONF = {
+    "TOKEN_LIFETIME_MINUTES": env.int("TOKEN_LIFETIME_MINUTES")
+}

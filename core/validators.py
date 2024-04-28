@@ -17,9 +17,12 @@ def validate_fecha_infraccion(value):
     """
     try:
         configuracion = Configuracion.objects.filter(nombre=settings.N5NOW_CHALLENGE_MAINCONFIG_KEY).first()
+        fecha_infraccion = value.date()
         fecha_actual = datetime.now().date()
         fecha_ancla = fecha_actual - timedelta(configuracion.dias_antiguedad_infraccion)
-        if not fecha_ancla <= value <= fecha_actual:
+        
+        print("Hola adrian:", type(configuracion), type(fecha_actual))
+        if not fecha_ancla <= fecha_infraccion <= fecha_actual:
             raise ValidationError(
                 f"la fecha de infracción no puede ser futura ni superar {configuracion.dias_antiguedad_infraccion} días de antigüedad.")
     except Configuracion.DoesNotExist:

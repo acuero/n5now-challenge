@@ -1,7 +1,5 @@
 from django.db import models
 from core.models.base import BaseModel
-from core.models.vehiculo import Vehiculo
-from core.models.oficial import Oficial
 from core.validators import validate_fecha_infraccion
 
 
@@ -10,7 +8,7 @@ class Infraccion(BaseModel):
     Modelo que representa una infraccion cargada a un vehiculo
     """
     vehiculo = models.ForeignKey(
-        Vehiculo,
+        "core.Vehiculo",
         on_delete=models.CASCADE,
         blank=False,
         null=False,
@@ -26,7 +24,7 @@ class Infraccion(BaseModel):
     )
 
     oficial = models.ForeignKey(
-        Oficial,
+        "core.Oficial",
         on_delete=models.CASCADE,
         blank=False,
         null=False,
