@@ -139,7 +139,8 @@ REST_FRAMEWORK = {
         "core.management.authentication.JWTOficialAuth",
         "rest_framework.authentication.TokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",        
-    }
+    },
+    'EXCEPTION_HANDLER': 'core.utils.custom_exception_handler'
 }
 
 JWT_CONF = {

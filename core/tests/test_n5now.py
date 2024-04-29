@@ -17,7 +17,7 @@ class TestN5Now(TestCase):
     """
     Subclase de pruebas para distintas funcionalidades del proyecto.
     
-    docker compose run --rm -w /app django manage.py test
+    docker compose run --rm -w /app django pytest
     """
     def setUp(self):
         self.client = APIClient()
@@ -140,7 +140,7 @@ class TestN5Now(TestCase):
     def test_cargar_infraccion_con_placa_invalida(self):
         """
         Test de integración para probar la carga de una infracción.
-        Espera un HTTP_400_BAD_REQUEST si se provee una placa inválida (no existente).
+        Espera un HTTP_404_NOT_FOUND si se provee una placa inválida (no existente).
         """
         data_token = {"nui": "0007652", "password": "0007652"}
         response_token = self.client.post(reverse("obtener_token"), data_token, format='json')
@@ -159,7 +159,7 @@ class TestN5Now(TestCase):
             data_infraccion, format='json', 
             HTTP_AUTHORIZATION=f"Bearer {json_token['token']}")
         json = response.json()
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.get('status_code'), status.HTTP_404_NOT_FOUND)
         self.assertIn("placa_patente", json)
         self.assertEqual(json['placa_patente'], ["La placa patente provista no existe."])
 
@@ -176,8 +176,7 @@ class TestN5Now(TestCase):
             - Fecha de la infraccion: 2024-04-09
         """
         Configuracion.objects.filter(pk=1).update(dias_antiguedad_infraccion=10)
-        fecha_actual.now.return_value.date.return_value = datetime(2024, 4, 20).date()
-        
+        fecha_actual.now.return_value.date.return_value = datetime(2024, 4, 20).date()        
         
         data_token = {"nui": "0007652", "password": "0007652"}
         response_token = self.client.post(reverse("obtener_token"), data_token, format='json')
@@ -196,7 +195,7 @@ class TestN5Now(TestCase):
             data_infraccion, format='json', 
             HTTP_AUTHORIZATION=f"Bearer {json_token['token']}")
         json = response.json()
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.get('status_code'), status.HTTP_400_BAD_REQUEST)
         self.assertIn("timestamp", json)
         
         configuracion = Configuracion.objects.get(nombre=settings.N5NOW_CHALLENGE_MAINCONFIG_KEY)
@@ -229,13 +228,13 @@ class TestN5Now(TestCase):
             "timestamp": "2023-04-21T10:15:00-0500",
             "comentarios": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
         }
-        
+                
         response = self.client.post(
             reverse("cargar_infraccion"), 
             data_infraccion, format='json', 
             HTTP_AUTHORIZATION=f"Bearer {json_token['token']}")
         json = response.json()
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.get('status_code'), status.HTTP_400_BAD_REQUEST)
         self.assertIn("timestamp", json)
         
         configuracion = Configuracion.objects.get(nombre=settings.N5NOW_CHALLENGE_MAINCONFIG_KEY)
@@ -258,11 +257,11 @@ class TestN5Now(TestCase):
     def test_generar_informe_con_email_invalido(self):
         """
         Test que prueba la generación del informe de un propietario.
-        Espera un HTTP_400_BAD_REQUEST si 
+        Espera un HTTP_400_BAD_REQUEST si se provee un email inexistente.
         """
-        data = {"email": "elbichote.cr7@gmail.com"}
+        data = {"email": "elbichote.cr7@gmail.com"}        
         response = self.client.post(reverse("generar_informe"), data, format='json')
         json = response.json()
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(json.get('status_code'), status.HTTP_404_NOT_FOUND)
         self.assertIn("email", json)
         self.assertEqual(json['email'], ["El correo electrónico provisto no existe."])

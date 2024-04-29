@@ -7,6 +7,7 @@ from django.conf import settings
 from core.models.configuracion import Configuracion
 from core.models.vehiculo import Vehiculo
 from core.models.persona import Persona
+from rest_framework import status
 
 
 
@@ -25,9 +26,12 @@ def validate_fecha_infraccion(value):
         
         if not fecha_ancla <= fecha_infraccion <= fecha_actual:
             raise ValidationError(
-                f"La fecha de infracción no puede ser futura ni superar {configuracion.dias_antiguedad_infraccion} días de antigüedad.")
+                f"La fecha de infracción no puede ser futura ni superar {configuracion.dias_antiguedad_infraccion} días de antigüedad.",
+                code=status.HTTP_400_BAD_REQUEST)
     except Configuracion.DoesNotExist:
-        raise ValidationError("No fué posible cargar configuración para validar fecha de infracción.")
+        raise ValidationError(
+            "No fué posible cargar configuración para validar fecha de infracción.",
+            code=status.HTTP_404_NOT_FOUND)
 
 
 def validate_placa_patente(value):
@@ -37,7 +41,9 @@ def validate_placa_patente(value):
     try:
         Vehiculo.objects.get(placa_patente=value)
     except Vehiculo.DoesNotExist:
-        raise ValidationError("La placa patente provista no existe.")
+        raise ValidationError(
+            "La placa patente provista no existe.",
+            code=status.HTTP_404_NOT_FOUND)
 
 
 def validate_email_propietario(value):
@@ -47,4 +53,6 @@ def validate_email_propietario(value):
     try:
         Persona.objects.get(email=value)
     except Persona.DoesNotExist:
-        raise ValidationError("El correo electrónico provisto no existe.")
+        raise ValidationError(
+            "El correo electrónico provisto no existe.",
+            code=status.HTTP_404_NOT_FOUND)
