@@ -1,9 +1,15 @@
 """
 Serializadores para presentacion de datos.
 """
+from django.conf import settings
 from rest_framework import serializers
-from core.validators import validate_fecha_infraccion, validate_placa_patente, validate_email_propietario
 from core.models.infraccion import Infraccion
+from core.validators import (
+    validate_fecha_infraccion, 
+    validate_placa_patente, 
+    validate_email_propietario
+)
+
 
 
 class OficialObtainTokenSerializer(serializers.Serializer):
@@ -26,6 +32,8 @@ class CargarInfraccionSerializer(serializers.Serializer):
     
     timestamp = serializers.DateTimeField(
         required=True,
+        format=settings.N5NOW_API_DATETIME_FORMAT,
+        error_messages={"invalid": f"Formato de fecha y hora inválido. El formato esperado es {settings.N5NOW_API_DATETIME_FORMAT}."},
         validators=[validate_fecha_infraccion])
     
     comentarios = serializers.CharField(

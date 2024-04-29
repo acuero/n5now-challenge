@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.core.exceptions import ValidationError
 from unittest.mock import patch, MagicMock
 from datetime import datetime
+#from core.validators import validate_fecha_infraccion, validate_formato_fecha_infraccion
 from core.validators import validate_fecha_infraccion
 from core.models.configuracion import Configuracion
 from core.models.oficial import Oficial
@@ -265,3 +266,34 @@ class TestN5Now(TestCase):
         self.assertEqual(json.get('status_code'), status.HTTP_404_NOT_FOUND)
         self.assertIn("email", json)
         self.assertEqual(json['email'], ["El correo electrónico provisto no existe."])
+    
+    
+    def test_cargar_infraccion_con_formato_invalido_fecha(self):
+        """
+        Test de integración para probar la carga de una infracción.
+        Espera un HTTP_400_BAD_REQUEST si se provee una fecha de infracción con formato errado.
+        """
+        data_token = {"nui": "0007652", "password": "0007652"}
+        response_token = self.client.post(reverse("obtener_token"), data_token, format='json')
+        json_token = response_token.json()
+        self.assertEqual(response_token.status_code, status.HTTP_200_OK)
+        self.assertIn("token", json_token)
+
+        data_infraccion = {
+            "placa_patente": "A12345",
+            "timestamp": "2024-04-0110:15:00-0500",
+            "comentarios": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        }
+        
+        response = self.client.post(
+            reverse("cargar_infraccion"), 
+            data_infraccion, format='json', 
+            HTTP_AUTHORIZATION=f"Bearer {json_token['token']}")
+        json = response.json()
+        print("json:", json)
+        self.assertEqual(json.get('status_code'), status.HTTP_400_BAD_REQUEST)
+        self.assertIn("timestamp", json)
+        self.assertEqual(
+            json['timestamp'], 
+            [f"Formato de fecha y hora inválido. El formato esperado es {settings.N5NOW_API_DATETIME_FORMAT}."])
+
