@@ -1,5 +1,7 @@
 FROM python:3.12
 
+WORKDIR /app
+
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
@@ -12,11 +14,13 @@ RUN apt-get update \
   && apt-get install -y gettext \
   # cleaning up unused files
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
-  && rm -rf /var/lib/apt/lists/* \
+  && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
-
-COPY . /app/.
+COPY . .
 
 RUN pip install -r /app/requirements.txt
 
+RUN sed -i 's/\r$//g' /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+ENTRYPOINT ["bash", "-e", "/app/entrypoint.sh"]
