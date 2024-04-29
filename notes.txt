@@ -1,0 +1,3 @@
+docker login
+docker tag n5now_challenge-django acuero/n5now_challenge-django
+docker push acuero/n5now_challenge-django

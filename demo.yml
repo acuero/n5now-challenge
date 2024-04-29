@@ -16,7 +16,7 @@ services:
 
   django:
     container_name: django
-    image: n5now_challenge-django:latest
+    image: acuero/n5now_challenge-django:latest
     volumes:
       - .:/app
     ports:
