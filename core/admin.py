@@ -88,15 +88,15 @@ class VehiculoAdmin(admin.ModelAdmin):
 
 
 class OficialAdmin(admin.ModelAdmin):
-    form = OficialCreationForm
+    #form = OficialCreationForm
     list_display = ['nombre', 'nui', 'fecha_creacion', 'ultima_modificacion']
     fieldsets = (
         ('Información básica', {
             'fields': (
                 ('nombre',),
                 ('nui',),
-                ('password1',),
-                ('password2',)
+                #('password1',),
+                #('password2',)
             )
         }),
         ('General', {
