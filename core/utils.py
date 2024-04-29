@@ -10,11 +10,12 @@ def custom_exception_handler(exc, context):
     """
     response = exception_handler(exc, context)
     code = response.status_code
-    exc_codes = list(exc.get_codes().values())    
+    temp = exc.get_codes()
+    if temp != 'method_not_allowed':
+        exc_codes = list(exc.get_codes().values())        
+        if exc_codes and len(exc_codes) > 0 and len(exc_codes[0]) > 0:
+            code = exc_codes[0][0]
     
-    if exc_codes and len(exc_codes) > 0 and len(exc_codes[0]) > 0:
-        code = exc_codes[0][0]
-        
     if response is not None:
         response.data['status_code'] = 400 if code=="invalid" else code
 
