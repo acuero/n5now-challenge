@@ -1,3 +1,9 @@
 docker login
 docker tag n5now_challenge-django acuero/n5now_challenge-django
 docker push acuero/n5now_challenge-django
+
+
+docker images | grep 'acuero/n5now_challenge-django'
+docker tag 6d053708473f my-local-image:latest
+docker pull acuero/n5now_challenge-django:latest
+docker images | grep 'acuero/n5now_challenge-django'
