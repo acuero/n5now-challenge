@@ -23,4 +23,10 @@ RUN pip install -r /app/requirements.txt
 RUN sed -i 's/\r$//g' /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
+RUN sed -i 's/\r$//g' /app/start.sh
+RUN chmod +x /app/start.sh
+
+RUN sed -i 's/\r$//g' /app/start-demo.sh
+RUN chmod +x /app/start-demo.sh
+
 ENTRYPOINT ["bash", "-e", "/app/entrypoint.sh"]

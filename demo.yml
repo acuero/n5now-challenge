@@ -25,4 +25,4 @@ services:
       - postgres
     env_file:
       - .env
-    command: /app/start-demo
+    command: ["bash", "-e", "/app/start-demo.sh"]
