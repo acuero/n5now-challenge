@@ -85,7 +85,10 @@ class GenerarInformeView(views.APIView):
         serializer.is_valid(raise_exception=True)
         
         email = serializer.validated_data.get('email')
-        infracciones = Infraccion.objects.filter(vehiculo__propietario__email=email)
+        #infracciones = Infraccion.objects.filter(vehiculo__propietario__email=email)
+        infracciones = Infraccion.objects\
+            .select_related('vehiculo__propietario')\
+                .filter(vehiculo__propietario__email=email)
         
         return Response(
             {

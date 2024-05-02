@@ -7,6 +7,7 @@ from core.validators import validate_fecha_infraccion
 from core.models.configuracion import Configuracion
 from core.models.oficial import Oficial
 from core.models.vehiculo import Vehiculo
+from core.models.infraccion import Infraccion
 from rest_framework.test import APIClient
 from rest_framework import status
 from django.urls import reverse
@@ -296,4 +297,18 @@ class TestN5Now(TestCase):
         self.assertEqual(
             json['timestamp'], 
             [f"Formato de fecha y hora inválido. El formato esperado es {settings.N5NOW_API_DATETIME_FORMAT}."])
-
+    
+    
+    def test_query_infraccion_con_select_related(self):
+        email = "elbicho.cr7@gmail.com"
+        print("\n")
+        q1 = Infraccion.objects.filter(vehiculo__propietario__email=email)
+        print(q1)
+        print(q1.explain())
+        print("******************************************************************************************************")
+        q2 = Infraccion.objects\
+            .select_related('vehiculo__propietario')\
+                .filter(vehiculo__propietario__email=email)
+        print(q2)
+        print(q2.explain())        
+        self.assertEqual(True, True)
