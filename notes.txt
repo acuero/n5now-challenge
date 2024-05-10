@@ -1,5 +1,6 @@
 docker login
-docker tag n5now_challenge-django acuero/n5now_challenge-django
+docker tag n5now_challenge-django acuero/n5now_challenge-django (windows)
+docker tag n5now-challenge-django acuero/n5now_challenge-django (linux)
 docker push acuero/n5now_challenge-django
 
 
